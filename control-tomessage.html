@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>通过自定义依赖实现数据共享</title>
+    <!--<script src="ajax.js"></script>-->
+    <script src="js/angular.js"></script>
+</head>
+
+<body ng-app="mod1">
+    <!--controller嵌套后，$scope有继承关系-->
+    <div ng-controller="cont1">
+
+    </div>
+    <div ng-controller="cont2">
+
+    </div>
+</body>
+<script>
+    var app = angular.module('mod1', []);
+//    通过自定义依赖实现数据共享 factory service provider
+    app.factory('test', function(){
+        return {
+            a: 1
+        }
+    })
+
+    app.controller('cont1', function($scope, test){
+        alert('cont1 ' + test.a)
+    });
+
+    app.controller('cont2', function($scope, test){
+        alert('cont2 ' + test.a)
+    })
+</script>
+</html>
+
+
+
+
+
+
+

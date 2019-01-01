@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <!--<script src="ajax.js"></script>-->
+    <script src="js/angular.js"></script>
+</head>
+
+<body ng-app="mod1">
+    <div ng-controller="cont1">{{num1}} -- {{sum}}</div>
+</body>
+<script>
+    var app = angular.module('mod1', []);
+    // 自定义依赖1
+    app.factory('sum', function(){
+        return function(i, j){
+            return i+j
+        }
+    })
+    // 自定义依赖2
+    app.provider('myPro', function(){
+        this.$get = function(){
+            return {
+                a: '1',
+                b: '2'
+            }
+        }
+    })
+    // 自定义依赖3
+    app.service('myPro2', function(){
+        this.a = 1;
+        this.fn = function() {
+            console.log(this.a)
+        }
+    })
+    // 自定义依赖4-常量-不可装饰
+    app.constant('VERSION', '1.0.0');
+    // 自定义依赖5-变量
+    app.value('vari', 10)
+    app.controller('cont1', function($scope, sum, myPro, myPro2, VERSION, vari){
+        $scope.num1 = 1;
+        console.log(sum);
+        $scope.sum = sum(1,2);
+
+        console.log(myPro);
+
+        myPro2.fn();
+
+        alert(VERSION);
+
+        alert(vari)
+    });
+
+</script>
+</html>
+
+
+
+
+
+
+

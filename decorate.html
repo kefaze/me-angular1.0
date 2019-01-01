@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <!--<script src="ajax.js"></script>-->
+    <script src="js/angular.js"></script>
+</head>
+
+<body ng-app="mod1">
+    <div ng-controller="cont1"></div>
+</body>
+<script>
+    var app = angular.module('mod1', []);
+    // 自定义依赖1
+    app.factory('sum', function(){
+//        return function(i, j){
+//            return i+j
+//        }
+
+        return {
+            a: '1',
+            b: '2'
+        }
+    });
+
+    // 装饰器 -- 修改自定义依赖 -- 初始化时只执行一次
+    app.decorator('sum', function($delegate){
+        $delegate.c = '3';
+        return $delegate
+    });
+
+    app.controller('cont1', function($scope, sum){
+        console.log(sum)
+    });
+
+</script>
+</html>
+
+
+
+
+
+
+

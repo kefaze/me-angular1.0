@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/angular.js"></script>
+    <!--<script src="js/angular.min.js"></script>-->
+</head>
+<body>
+    <div ng-controller="myControl">
+
+        <button
+                ng-click = "clickIndex($index)"
+                class="{{$index == nowIndex?'active':''}}"
+                ng-repeat="item in arr">
+            {{item.item}}
+        </button>
+
+        <div ng-show="$index == nowIndex" ng-repeat="c in arr">{{c.content}}</div>
+
+    </div>
+</body>
+<script>
+    var app = angular.module('myApp',[]);
+    app.controller('myControl', function($scope){
+        $scope.nowIndex = 0;
+        $scope.arr = [
+            {item: '电视', content: '电视-----电视', active: true},
+            {item: '体育', content: '体育-----电视', active: false},
+            {item: '音乐', content: '音乐-----电视', active: false}
+        ];
+        $scope.clickIndex = function(n) {
+            $scope.nowIndex = n;
+        }
+    })
+</script>
+<style>
+    .active{
+        background: #148f23;
+        color: #fff;
+    }
+</style>
+</html>

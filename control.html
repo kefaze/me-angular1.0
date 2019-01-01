@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <!--<script src="ajax.js"></script>-->
+    <script src="js/angular.js"></script>
+</head>
+
+<body ng-app="mod1">
+    <!--controller嵌套后，$scope有继承关系-->
+    <div ng-controller="cont1">
+        <div ng-controller="cont2"></div>
+    </div>
+</body>
+<script>
+    var app = angular.module('mod1', []);
+
+    app.controller('cont1', function($scope){
+        $scope.a = {
+            name: 'abc',
+            age: '18'
+        }
+        console.log('父级', $scope.a)
+    });
+
+    app.controller('cont2', function($scope){
+        // 子controller 可以直接使用父级数据
+        $scope.a.name = 'vv';
+        console.log('子级', $scope.a)
+    })
+</script>
+</html>
+
+
+
+
+
+
+

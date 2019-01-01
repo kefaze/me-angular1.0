@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app="mod1">
+<head>
+    <meta charset="utf-8">
+    <title>router</title>
+    <!--<script src="ajax.js"></script>-->
+    <script src="js/angular.js"></script>
+    <script src="js/angular-route.js"></script>
+
+    <script src="路由/view/user/user.js"></script>
+    <script src="路由/view/article/article.js"></script>
+    <script src="路由/view/setting/setting.js"></script>
+</head>
+
+<body>
+    <div ng-controller="main">
+        <div ng-show="loading">加载中... ... ... </div>
+        <a href="#/user">用户信息</a>
+        <a href="#/article">文章列表</a>
+        <a href="#/setting">设置页面</a>
+        <a href="#/setting/?type=news">设置页面-news</a>
+        <a href="#/setting/?type=game">设置页面-game</a>
+        <ng-view></ng-view>
+    </div>
+
+</body>
+<script>
+    var app = angular.module('mod1', ['ngRoute', 'userMod', 'articleMod', 'setMod']);
+
+    app.controller('main', function($scope){
+        $scope.loading = false;
+
+        $scope.$on('$routeChangeStart', function(){
+            alert('开始加载。。。');
+            $scope.loading = true;
+        });
+
+        $scope.$on('$routeChangeSuccess', function(){
+            alert('加载完成。。。');
+            $scope.loading = false;
+        });
+
+        $scope.$on('$routeChangeError', function(){
+            $scope.loading = false;
+        })
+    });
+
+    app.config(function($routeProvider){
+        $routeProvider.when('/user', {
+//            template: '<div>用户信息1111</div>'
+            templateUrl: '路由/view/user/user.html',
+            controller: 'userCont'
+        }).when('/article', {
+//            template: '<div>文章列表</div>'
+            templateUrl: '路由/view/article/article.html',
+            controller: 'articleCont',
+            resolve: {  // 延时加载
+                delay: function($q){
+                    var delay = $q.defer();
+
+                    setTimeout(function(){
+                        delay.resolve()
+                    }, 2000);
+
+                    return delay.promise
+                }
+            }
+        }).when('/setting', {
+//            template: '<div>用户设置</div>'
+            templateUrl: '路由/view/setting/setting.html',
+            controller: 'setCont'
+        })
+    });
+
+
+</script>
+</html>
+
+
+
+
+
+
+
